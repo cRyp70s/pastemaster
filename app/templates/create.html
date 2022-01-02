@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Create Paste{% endblock %}
+{% block body %}
+<div class="row">
+        <div class="col-md-8">
+                <h1>Create Your New Paste</h1>
+                {% if edit_url is defined %}
+                        <div class="alert alert-warning" role="alert">
+                                This is your edit url: {{edit_url}}. You must have this to be able to edit this paste. If lost it cannot be retrieved.
+                        </div>
+                        <div class="alert alert-warning" role="alert">
+                                This is your read url: {{read_url}}. {% if not paste.public %} You must have this to be able to read this paste. If lost it cannot be retrieved.{% endif %}
+                        </div>
+                {% endif %}
+                <form id="create-form" {% if readonly is not defined %} method="post" action="{{url_for('create')}}" {% endif %}>
+                        <label form="title">Title</label>
+                        <input type="text" name="title" class="form-control form-control-sm" id="title" 
+                        {% if paste is defined %}
+                                        value="{{paste.title}}"
+                        {% endif %} {% if readonly is defined %}disabled{% endif %}>
+                        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                        <div class="m-1">
+                                <div class="form-check form-switch">
+                                        <input type="checkbox" name="public" id="publicSwitch" class="form-check-input" {% if paste is defined %}{% if paste.public %}checked{% endif %}{% endif %}>
+                                        <label class="form-check-label" for="publicSwitch">Public</label>
+                                </div>
+                        </div>
+                        <textarea class="form-control form-control-sm" id="create-text" name="content" {% if readonly is defined %}disabled{% endif %}>{% if content is defined %}{{content|safe}}{% endif %}</textarea>
+                        {% if readonly is not defined %}<button class="btn btn-primary mt-1">Submit</button>{% endif %}
+                </form> 
+        </div>
+        <div class="col-md-4 bg-light pt-2 rounded">
+                <div class=" bg-light p-3">
+                        <h4 class="text-center">Popular Pastes</h4>
+                        <div class="border-bottom border-dark pb-4 mb-2 row"></div>
+                        {% if top_pastes is defined %}
+                                {% for paste in top_pastes %}
+                                        <a class="text-decoration-none text-dark" href="{{url_for('paste', id=paste.id, token=1)}}">
+                                        <div class="row border-bottom border-dark pb-2">
+                                        <h5>{{paste.title}}</h5>
+                                        <p><i class="material-icons fs-6">visibility</i> {{paste.views}} created: {{paste.created.isoformat().split('.')[0]}}</p>
+                                        </div>
+                                        </a>
+                                {% endfor %}
+                        {% endif %}
+                </div>
+        </div>
+</div>
+{% endblock %}

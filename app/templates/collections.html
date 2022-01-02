@@ -1,0 +1,18 @@
+<div class="row">
+{%- for item in result.items %}
+  <div class="col s12 m4">
+    <div class="card" onclick="window.location.hash='/view-item/{{item.id}}'">
+      <div class="card-image">
+        <img src="/static/{{item.sample_img_url}}">
+        <span class="card-title bold-text adv-serif">{{item.title}}</span>
+        <!-- <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a> -->
+      </div>
+      <div class="card-content black-text bold-text">
+        <b>By {{item.artist}} | Collection: {{item.collection}}...</b>
+        <hr>
+        <p>{{item.description[:60]}}...</p>
+      </div>
+    </div>
+  </div>
+{%- endfor %}
+</div>

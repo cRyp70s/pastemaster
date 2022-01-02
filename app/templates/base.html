@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="icon" href="/static/logo.png">
+        <link rel="stylesheet" href="/static/css/stylesheet.css">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/stylesheet.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/animate.min.css')}}">
+        <title>{% block title %}{% endblock %}</title>
+        {% block head %}
+        {% endblock %}
+        <style type="text/css">
+               #copyright {
+                padding-left: 44vw;
+               } 
+
+               @media only screen and (max-width: 601px){
+                #copyright {
+                        padding-left: 35vw;
+                }                
+               }
+        </style>
+</head>
+<body>
+        <nav class="mt-1">
+                <ul class="nav gap-1">
+                        <li class="nav-item"><a class="nav-link fs-5 text-dark" href="{{url_for('index')}}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link fs-5 text-dark bg-info" href="{{url_for('create')}}">New Paste <span class="material-icons fw-bolder fs-3">add</span></a></li>
+                        <li class="nav-item"><a class="nav-link fs-5 text-dark bg-light" href="{{url_for('public')}}">Public Pastes <span class="material-icons fw-bolder fs-3">list</span></a></li>
+                </ul>
+        </nav>
+        <div class=" mt-4" id="body">
+                {% block body %} {% endblock %}
+                {% if home is defined %}
+                        <div class="row mt-3" style="position: absolute; bottom: 0px;">
+                        <p class="mb-0" id="copyright">
+                                <span style="font-family: Arial;">&copy;</span> 2022 PasteMaster    
+                        </p>
+                        </div>
+                {% else %}
+                <div class="row mt-3" style="position: relative; bottom: 0px;">
+                        <p class="mb-0" id="copyright">
+                                <span style="font-family: Arial;">&copy;</span> 2022 PasteMaster    
+                        </p>
+                </div>
+                {% endif %}
+        </div>  
+        <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+</body>
+</html>

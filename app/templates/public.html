@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Public Paste{% endblock %}
+{% block body %}
+<h1>Public Pastes</h1>
+<div class="row">
+	<div class="col-md-4 my-2">
+		<form>
+			<input type="text" name="s" placeholder="search" class="form-control form-control-sm">
+			<button class="btn-sm btn-primary">Search</button>
+		</form>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12 col-md-7 bg-light">
+		{% for paste in paginated.items %}
+			<a class="text-decoration-none text-dark" href="{{url_for('paste', id=paste.id, token=1)}}">
+				<div class="row border-bottom border dark">
+					<h3>{{paste.title}}</h3>
+					<p>{{paste.content.decode()[:200]}}...</p>
+					<p class="mt-2"><i class="material-icons fs-6">visibility</i> {{paste.views}} Created: {{paste.created.isoformat().split('.')[0]}}</p>
+				</div>
+			</a>
+		{% endfor %}	
+		<div class="row mt-3 p-0 pt-3" >
+			<nav aria-label="page nav">
+				<ul class="pagination">
+					<li class="page-item"><a class="page-link" {% if paginated.page > 1 %} href="{{ url_for('public', page=paginated.page-1) }}" {% endif %}>Previous</a></li>
+					{%- for page in paginated.iter_pages() %}
+						{% if page %}
+							{% if page != paginated.page %}
+								<li class="page-item"><a class="page-link" href="{{ url_for('public', page=page) }}">{{ page }}</a></li>
+							{% else %}
+								<li class="page-item"><a class="page-link active">{{ page }}</a></li>
+							{% endif %}
+						{% else %}
+							<span class=ellipsis>...</span>
+						{% endif %}
+					{%- endfor %}
+					<li class="page-item"><a class="page-link" {% if paginated.page < paginated.pages %} href="{{ url_for('public', page=paginated.page+1) }}" {% endif %}>Next</a></li>
+					
+				</ul>
+			</nav>
+		</div>
+	</div>
+	<div class="col-md-4 pt-2 rounded offset-md-1 mt-3">
+		<div class=" bg-light p-3">
+        <h4 class="text-center">Popular Pastes</h4>
+        <div class="border-bottom border-dark pb-4 mb-2 row"></div>
+            {% if top_pastes is defined %}
+                {% for paste in top_pastes %}
+                    <a class="text-decoration-none text-dark" href="{{url_for('paste', id=paste.id, token=1)}}">
+                    	<div class="row border-bottom border-dark pb-2">
+                    		<h5>{{paste.title}}</h5>
+                        	<p><i class="material-icons fs-6">visibility</i> {{paste.views}} created: {{paste.created.isoformat().split('.')[0]}}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    	</div>
+</div>
+{% endblock %}

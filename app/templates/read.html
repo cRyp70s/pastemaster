@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Viewing {{paste.title}}{% endblock %}
+{% block body %}
+<div class="row">
+        <div class="col-md-7 bg-light">
+                <h1>{{paste.title}} </h1>
+                <span id="copy" onclick="copy()"><i class="material-icons">content_copy</i> copy</span>
+                <p> <i class="material-icons fs-6">visibility</i> {{paste.views}} created: {{paste.created.isoformat().split('.')[0]}}</p>
+                <div class=" row read-paste" id="data">
+                        <p>
+                                {{content}}
+                        </p>
+                </div>
+        </div>
+        <div class="col-md-4  pt-2 mt-3 mt-md-0 rounded offset-md-1 ">
+                <div class=" bg-light p-3">
+        <h4 class="text-center">Popular Pastes</h4>
+        <div class="border-bottom border-dark pb-4 mb-2 row"></div>
+            {% if top_pastes is defined %}
+                {% for paste in top_pastes %}
+                    <a class="text-decoration-none text-dark" href="{{url_for('paste', id=paste.id, token=1)}}">
+                        <div class="row border-bottom border-dark pb-2">
+                                <h5>{{paste.title}}</h5>
+                                <p><i class="material-icons fs-6">visibility</i> {{paste.views}} created: {{paste.created.isoformat().split('.')[0]}}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+        </div>
+</div>
+<script type="text/javascript">
+        function copy() {
+                try {
+                        var data = `{{content}}`;
+                        navigator.clipboard.writeText(data);
+                        alert('Copied');
+                } catch($e) {
+                        alert('Cannot copy');
+                }
+        }
+    
+</script>
+{% endblock %}

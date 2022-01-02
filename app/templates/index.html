@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block head %}
+<style type="text/css">
+        @media only screen and (min-width: 601px){
+                .offset-md-6 {
+                        margin-top: -22vh;
+                        height: 120vh;
+                        padding-left: 9em !important;
+                        padding-top: 9em !important;
+                        animation-name: slideInRight;
+                        animation-duration: 2s;
+
+                }
+ 
+                body {
+                        min-height: 100vh;
+                }
+                .bg-transp {
+                        background-color: #f8f9fad9!important;
+                }
+        }
+</style>
+{% endblock %}
+{% block body %}
+<div class="col-md-6 offset-md-6 bg-transp bg-light p-4">
+        <h1 style="font-family: 'Logo';" class="fs-1 index">PasteMaster</h1>
+        <div class=" col-md-9 index">
+                <p class="text-black fs-5">
+                        Share texts with anyone or everyone with PasteMaster.
+                        Pastemaster allows you to create and store plain text
+                        publicly or privately, no need to login or sign up. Your private pastes are encrypted
+                         and no one else can access your pastes except you or
+                        anyone you share it with.
+                </p>
+                <a href="{{url_for('create')}}" class="btn btn-success btn-lg">Create A New Paste</a>
+        </div>  
+</div>
+{% endblock %}
