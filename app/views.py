@@ -220,16 +220,3 @@ def public():
     paginated = paginated.paginate(page, per_page=8)
     print(paginated.items)
     return render_template("public.html", paginated=paginated, top_pastes=top_pastes)
-
-
-@app.route("/gg")
-def gg():
-    for i in range(400):
-        paste = Paste(
-            content=b"""Mauris non semper metus, nec egestas felis. Quisque rutrum risus vitae magna commodo, eu pharetra mi vulputate. Nunc interdum lectus hendrerit ligula lobortis, tristique ornare urna placerat. Nulla mauris mauris, eleifend id dictum sed, feugiat in nisl. Aliquam viverra, risus a placerat accumsan, ipsum ante tempor enim, non pellentesque est enim vel enim. Fusce commodo hendrerit nibh, eget scelerisque nunc sagittis vitae. Mauris vitae ullamcorper nulla, nec scelerisque eros. Nunc fermentum commodo risus, vel rutrum nulla dictum id.""",
-            title="Lore",
-            public=True,
-        )
-        db.session.add(paste)
-    db.session.commit()
-    return redirect(url_for("index"))
